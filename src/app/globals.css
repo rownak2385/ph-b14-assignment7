@@ -3,6 +3,7 @@
 :root {
   --background: #f5faf7;
   --foreground: #0f172a;
+  --brand: #047857;
 }
 
 * {
@@ -22,6 +23,21 @@ body {
   color: var(--foreground);
   font-family: "Noto Sans Bengali", "Hind Siliguri", "Nirmala UI", sans-serif;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(4, 120, 87, 0.18);
+  color: #052e16;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  scroll-margin: 1rem;
 }
 
 button,

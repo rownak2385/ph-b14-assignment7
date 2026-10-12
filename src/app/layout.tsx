@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { getCategories } from "@/lib/categories";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,10 +16,28 @@ export const metadata: Metadata = {
   applicationName: "বাজার দর",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default async function RootLayout({
+  children,
+}: Readonly<{ children: ReactNode }>) {
+  const categories = await getCategories();
+
   return (
     <html lang="bn">
-      <body>{children}</body>
+      <body>
+        <a
+          href="#main-content"
+          className="sr-only z-[100] rounded-lg bg-white px-4 py-3 font-bold text-emerald-800 shadow-lg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          মূল কনটেন্টে যান
+        </a>
+        <div className="flex min-h-screen flex-col">
+          <SiteHeader categories={categories} />
+          <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+            {children}
+          </main>
+          <SiteFooter />
+        </div>
+      </body>
     </html>
   );
 }
