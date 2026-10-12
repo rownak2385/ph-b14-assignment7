@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 
+import { LivePriceTicker, PriceTickerSkeleton } from "@/components/home/price-ticker";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getCategories } from "@/lib/categories";
@@ -32,6 +33,9 @@ export default async function RootLayout({
         </a>
         <div className="flex min-h-screen flex-col">
           <SiteHeader categories={categories} />
+          <Suspense fallback={<PriceTickerSkeleton />}>
+            <LivePriceTicker />
+          </Suspense>
           <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
             {children}
           </main>
