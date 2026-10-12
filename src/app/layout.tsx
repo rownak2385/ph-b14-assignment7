@@ -4,6 +4,7 @@ import { Suspense, type ReactNode } from "react";
 import { LivePriceTicker, PriceTickerSkeleton } from "@/components/home/price-ticker";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ToastProvider } from "@/components/toast-provider";
 import { getCategories } from "@/lib/categories";
 
 import "./globals.css";
@@ -25,6 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="bn">
       <body>
+        <ToastProvider />
         <a
           href="#main-content"
           className="sr-only z-[100] rounded-lg bg-white px-4 py-3 font-bold text-emerald-800 shadow-lg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"

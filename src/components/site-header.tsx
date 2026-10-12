@@ -1,6 +1,4 @@
-import { LogIn, UserPlus } from "lucide-react";
-import Link from "next/link";
-
+import { AuthControls } from "@/components/auth-controls";
 import { Brand } from "@/components/brand";
 import { Container } from "@/components/container";
 import { MobileNavigation } from "@/components/mobile-navigation";
@@ -20,22 +18,7 @@ export function SiteHeader({ categories }: SiteHeaderProps) {
       <Container className="flex min-h-20 items-center justify-between gap-4 py-3 sm:min-h-24">
         <Brand date={date} />
 
-        <nav className="hidden items-center gap-3 md:flex" aria-label="অ্যাকাউন্ট নেভিগেশন">
-          <Link
-            href="/signin"
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-emerald-700 px-4 py-2.5 text-sm font-bold text-emerald-800 transition-colors hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-          >
-            <LogIn aria-hidden="true" size={17} />
-            সাইন ইন
-          </Link>
-          <Link
-            href="/signup"
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-          >
-            <UserPlus aria-hidden="true" size={17} />
-            সাইন আপ
-          </Link>
-        </nav>
+        <AuthControls />
 
         <MobileNavigation categories={categories} />
       </Container>

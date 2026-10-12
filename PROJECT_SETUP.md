@@ -11,11 +11,25 @@ The Phase 1 homepage is intentionally minimal. Product data, category routes, au
 - Next.js with the App Router
 - React and TypeScript
 - Tailwind CSS
+- Better Auth with email/password, Google, and GitHub authentication
+- Neon PostgreSQL through the built-in Better Auth PostgreSQL adapter
+- React Hot Toast for authentication feedback
 - ESLint with Next.js rules
-- Lucide React for future interface icons
+- Lucide React for interface icons
 - npm for dependency management
 
-Better Auth and PostgreSQL are planned for the authentication milestone and are not installed in Phase 1.
+## Authentication configuration
+
+Copy `.env.example` to `.env.local` and provide a Neon PostgreSQL connection string, a high-entropy Better Auth secret, the application URL, and Google/GitHub OAuth credentials. Never commit `.env.local`.
+
+For local OAuth applications, configure these callback URLs:
+
+```text
+http://localhost:3000/api/auth/callback/google
+http://localhost:3000/api/auth/callback/github
+```
+
+The Better Auth server configuration lives in `src/lib/auth.ts`, and its Next.js handler is mounted under `src/app/api/auth/[...all]/route.ts`. Apply additive schema changes with the official Better Auth CLI only after inspecting the target database.
 
 ## Installation
 

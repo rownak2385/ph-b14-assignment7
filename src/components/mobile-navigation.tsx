@@ -1,9 +1,9 @@
 "use client";
 
-import { LogIn, Menu, UserPlus, X } from "lucide-react";
-import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
+import { AuthControls } from "@/components/auth-controls";
 import { NavigationLinks } from "@/components/navigation-links";
 import type { Category } from "@/types/category";
 
@@ -48,23 +48,8 @@ export function MobileNavigation({ categories }: MobileNavigationProps) {
               />
             </nav>
 
-            <div className="mt-5 grid grid-cols-2 gap-3 border-t border-slate-100 pt-5">
-              <Link
-                href="/signin"
-                onClick={closeMenu}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-emerald-700 px-4 py-2.5 text-sm font-bold text-emerald-800 transition-colors hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-              >
-                <LogIn aria-hidden="true" size={17} />
-                সাইন ইন
-              </Link>
-              <Link
-                href="/signup"
-                onClick={closeMenu}
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-emerald-700 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-              >
-                <UserPlus aria-hidden="true" size={17} />
-                সাইন আপ
-              </Link>
+            <div className="mt-5 border-t border-slate-100 pt-5">
+              <AuthControls mobile onNavigate={closeMenu} />
             </div>
           </div>
         </div>
