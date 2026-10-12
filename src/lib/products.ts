@@ -170,6 +170,21 @@ export const getProducts = cache(async (): Promise<ProductResult> => {
   return { products, status: "success" };
 });
 
+export const getProductsByCategory = cache(
+  async (categorySlug: string): Promise<ProductResult> => {
+    const products = await fetchBazarDorData(
+      `/products?category=${encodeURIComponent(categorySlug)}`,
+      parseProducts,
+    );
+
+    if (products === null) {
+      return { products: [], status: "error" };
+    }
+
+    return { products, status: "success" };
+  },
+);
+
 export function getTopPriceIncreases(products: Product[], limit = 6): Product[] {
   return products
     .filter((product) => product.change.pct > 0)

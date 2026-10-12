@@ -23,7 +23,7 @@ export function NavigationLinks({
       href: `/category/${category.slug}`,
       label: category.nameBn,
       icon: category.icon,
-      isActive: pathname.startsWith(`/category/${category.slug}`),
+      isActive: pathname === `/category/${category.slug}`,
     })),
   ];
 

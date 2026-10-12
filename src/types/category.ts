@@ -5,3 +5,8 @@ export type Category = {
   icon: string;
 };
 
+export type CategoryResult = {
+  categories: Category[];
+  status: "success" | "error";
+};
+

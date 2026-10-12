@@ -1,5 +1,7 @@
+import { cache } from "react";
+
 import { fetchBazarDorData } from "@/lib/api";
-import type { Category } from "@/types/category";
+import type { Category, CategoryResult } from "@/types/category";
 
 function isCategory(value: unknown): value is Category {
   if (!value || typeof value !== "object") {
@@ -24,7 +26,17 @@ function parseCategories(data: unknown): Category[] | null {
   return data;
 }
 
+export const getCategoryResult = cache(async (): Promise<CategoryResult> => {
+  const categories = await fetchBazarDorData("/categories", parseCategories);
+
+  if (categories === null) {
+    return { categories: [], status: "error" };
+  }
+
+  return { categories, status: "success" };
+});
+
 export async function getCategories(): Promise<Category[]> {
-  return (await fetchBazarDorData("/categories", parseCategories)) ?? [];
+  return (await getCategoryResult()).categories;
 }
 
