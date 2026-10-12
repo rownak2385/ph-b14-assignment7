@@ -35,7 +35,10 @@ export function SignInForm({
         : `/signin?callbackUrl=${encodeURIComponent(safeCallbackUrl)}`;
       window.history.replaceState({}, "", cleanUrl);
     } else if (safeCallbackUrl !== "/") {
-      toast("পণ্যের বিস্তারিত দেখতে আগে সাইন ইন করুন।", { id: "protected-route" });
+      const protectedRouteMessage = safeCallbackUrl.startsWith("/profile")
+        ? "প্রোফাইল দেখতে আগে সাইন ইন করুন।"
+        : "পণ্যের বিস্তারিত দেখতে আগে সাইন ইন করুন।";
+      toast(protectedRouteMessage, { id: "protected-route" });
     }
   }, [hasOAuthError, safeCallbackUrl]);
 
