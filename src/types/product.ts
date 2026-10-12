@@ -9,8 +9,8 @@ export type ProductChange = {
 export type MarketPrice = {
   market: string;
   division: string;
-  min: number;
-  max: number;
+  min: number | null;
+  max: number | null;
 };
 
 export type Product = {
@@ -34,4 +34,9 @@ export type ProductResult = {
   products: Product[];
   status: "success" | "error";
 };
+
+export type ProductLookupResult =
+  | { status: "success"; product: Product }
+  | { status: "not-found" }
+  | { status: "error" };
 

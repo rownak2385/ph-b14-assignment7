@@ -5,21 +5,35 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import { authClient } from "@/lib/auth-client";
+import { getSafeCallbackUrl } from "@/lib/safe-callback-url";
 
 type Provider = "google" | "github";
 
-export function SocialAuthButtons({ disabled = false }: { disabled?: boolean }) {
+export function SocialAuthButtons({
+  disabled = false,
+  callbackUrl = "/",
+}: {
+  disabled?: boolean;
+  callbackUrl?: string;
+}) {
   const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
+  const safeCallbackUrl = getSafeCallbackUrl(callbackUrl);
 
   async function signInWithProvider(provider: Provider) {
     setPendingProvider(provider);
 
     try {
+      const errorParams = new URLSearchParams({ oauthError: "1" });
+
+      if (safeCallbackUrl !== "/") {
+        errorParams.set("callbackUrl", safeCallbackUrl);
+      }
+
       const result = await authClient.signIn.social({
         provider,
-        callbackURL: "/",
-        newUserCallbackURL: "/",
-        errorCallbackURL: "/signin?oauthError=1",
+        callbackURL: safeCallbackUrl,
+        newUserCallbackURL: safeCallbackUrl,
+        errorCallbackURL: `/signin?${errorParams.toString()}`,
       });
 
       if (result.error) {

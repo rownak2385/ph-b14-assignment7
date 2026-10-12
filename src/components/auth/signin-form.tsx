@@ -8,23 +8,36 @@ import toast from "react-hot-toast";
 
 import { SocialAuthButtons } from "@/components/auth/social-auth-buttons";
 import { authClient } from "@/lib/auth-client";
+import { getSafeCallbackUrl } from "@/lib/safe-callback-url";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function SignInForm() {
+type SignInFormProps = {
+  callbackUrl?: string;
+  hasOAuthError?: boolean;
+};
+
+export function SignInForm({
+  callbackUrl = "/",
+  hasOAuthError = false,
+}: SignInFormProps) {
   const router = useRouter();
+  const safeCallbackUrl = getSafeCallbackUrl(callbackUrl);
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    if (params.has("oauthError") || params.has("error")) {
+    if (hasOAuthError) {
       toast.error("সামাজিক লগইন সম্পন্ন হয়নি। আবার চেষ্টা করুন।", { id: "oauth-error" });
-      window.history.replaceState({}, "", "/signin");
+      const cleanUrl = safeCallbackUrl === "/"
+        ? "/signin"
+        : `/signin?callbackUrl=${encodeURIComponent(safeCallbackUrl)}`;
+      window.history.replaceState({}, "", cleanUrl);
+    } else if (safeCallbackUrl !== "/") {
+      toast("পণ্যের বিস্তারিত দেখতে আগে সাইন ইন করুন।", { id: "protected-route" });
     }
-  }, []);
+  }, [hasOAuthError, safeCallbackUrl]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -54,7 +67,7 @@ export function SignInForm() {
       }
 
       toast.success("সফলভাবে সাইন ইন হয়েছে।");
-      router.push("/");
+      router.replace(safeCallbackUrl);
       router.refresh();
     } catch {
       const message = "সাইন ইন সেবাটি এখন পাওয়া যাচ্ছে না। কিছুক্ষণ পর চেষ্টা করুন।";
@@ -125,11 +138,11 @@ export function SignInForm() {
         <span className="h-px flex-1 bg-slate-200" /> অথবা <span className="h-px flex-1 bg-slate-200" />
       </div>
 
-      <SocialAuthButtons disabled={isSubmitting} />
+      <SocialAuthButtons disabled={isSubmitting} callbackUrl={safeCallbackUrl} />
 
       <p className="mt-7 text-center text-sm text-slate-600">
         অ্যাকাউন্ট নেই?{" "}
-        <Link href="/signup" className="font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600">
+        <Link href={safeCallbackUrl === "/" ? "/signup" : `/signup?callbackUrl=${encodeURIComponent(safeCallbackUrl)}`} className="font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600">
           সাইন আপ করুন
         </Link>
       </p>

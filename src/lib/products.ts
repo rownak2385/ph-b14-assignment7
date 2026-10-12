@@ -1,10 +1,11 @@
 import { cache } from "react";
 
-import { fetchBazarDorData } from "@/lib/api";
+import { fetchBazarDorData, fetchBazarDorResource } from "@/lib/api";
 import type {
   MarketPrice,
   PriceDirection,
   Product,
+  ProductLookupResult,
   ProductResult,
   ProductUnit,
 } from "@/types/product";
@@ -62,7 +63,7 @@ function normalizeMarket(value: unknown): MarketPrice | null {
   const min = normalizeNumber(value.min);
   const max = normalizeNumber(value.max);
 
-  if (!market || !division || min === null || max === null) {
+  if (!market || !division) {
     return null;
   }
 
@@ -182,6 +183,42 @@ export const getProductsByCategory = cache(
     }
 
     return { products, status: "success" };
+  },
+);
+
+export const getProductBySlug = cache(
+  async (slug: string): Promise<ProductLookupResult> => {
+    const productResult = await getProducts();
+
+    if (productResult.status === "error") {
+      return { status: "error" };
+    }
+
+    const productSummary = productResult.products.find(
+      (product) => product.slug === slug,
+    );
+
+    if (!productSummary) {
+      return { status: "not-found" };
+    }
+
+    const detailResult = await fetchBazarDorResource(
+      `/products/${productSummary.id}`,
+      normalizeProduct,
+    );
+
+    if (detailResult.status !== "success") {
+      return detailResult;
+    }
+
+    if (
+      detailResult.data.id !== productSummary.id ||
+      detailResult.data.slug !== productSummary.slug
+    ) {
+      return { status: "error" };
+    }
+
+    return { status: "success", product: detailResult.data };
   },
 );
 
