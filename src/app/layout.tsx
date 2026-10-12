@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Hind_Siliguri } from "next/font/google";
 import { Suspense, type ReactNode } from "react";
 
 import { LivePriceTicker, PriceTickerSkeleton } from "@/components/home/price-ticker";
@@ -8,6 +9,13 @@ import { ToastProvider } from "@/components/toast-provider";
 import { getCategories } from "@/lib/categories";
 
 import "./globals.css";
+
+const hindSiliguri = Hind_Siliguri({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["bengali", "latin"],
+  display: "swap",
+  variable: "--font-hind-siliguri",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -24,7 +32,7 @@ export default async function RootLayout({
   const categories = await getCategories();
 
   return (
-    <html lang="bn">
+    <html lang="bn" className={hindSiliguri.variable}>
       <body>
         <ToastProvider />
         <a

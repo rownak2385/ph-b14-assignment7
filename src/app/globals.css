@@ -21,7 +21,7 @@ body {
     radial-gradient(circle at top, rgba(16, 185, 129, 0.09), transparent 28rem),
     var(--background);
   color: var(--foreground);
-  font-family: "Noto Sans Bengali", "Hind Siliguri", "Nirmala UI", sans-serif;
+  font-family: var(--font-hind-siliguri), "Nirmala UI", sans-serif;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
