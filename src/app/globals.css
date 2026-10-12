@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f5faf7;
+  --foreground: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at top, rgba(16, 185, 129, 0.09), transparent 28rem),
+    var(--background);
+  color: var(--foreground);
+  font-family: "Noto Sans Bengali", "Hind Siliguri", "Nirmala UI", sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
