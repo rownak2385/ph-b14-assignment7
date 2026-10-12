@@ -118,7 +118,7 @@ function MarketPriceCard({
               </div>
               {difference !== null ? (
                 <p className="mt-2 text-xs leading-5 text-slate-500">
-                  সামগ্রিক গড়ের চেয়ে {percentageFormatter.format(Math.abs(difference))}% {difference > 0 ? "বেশি" : difference < 0 ? "কম" : "সমান"}
+                  সামগ্রিক আনুমানিক গড়ের চেয়ে {percentageFormatter.format(Math.abs(difference))}% {difference > 0 ? "বেশি" : difference < 0 ? "কম" : "সমান"}
                 </p>
               ) : null}
             </div>

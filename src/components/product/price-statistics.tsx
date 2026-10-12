@@ -25,7 +25,7 @@ export function PriceStatistics({ statistics, unit }: PriceStatisticsProps) {
           tone: "bg-rose-50 text-rose-700 ring-rose-100",
         },
         {
-          label: "গড় দাম",
+          label: "আনুমানিক গড়",
           value: statistics.midpoint,
           Icon: ChartNoAxesCombined,
           tone: "bg-amber-50 text-amber-700 ring-amber-100",
@@ -59,7 +59,7 @@ export function PriceStatistics({ statistics, unit }: PriceStatisticsProps) {
             ))}
           </div>
           <p className="mt-4 text-xs leading-5 text-slate-500">
-            গড় দাম {statistics.marketCount.toLocaleString("bn-BD")}টি বৈধ বাজারের সর্বনিম্ন ও সর্বোচ্চ মূল্যসীমার মধ্যমান থেকে হিসাব করা হয়েছে।
+            আনুমানিক গড় {statistics.marketCount.toLocaleString("bn-BD")}টি বৈধ বাজারের সর্বনিম্ন ও সর্বোচ্চ মূল্যসীমার মধ্যমান থেকে হিসাব করা হয়েছে।
           </p>
         </>
       ) : (
