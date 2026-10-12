@@ -4,7 +4,7 @@ BazarDor is a responsive Bengali market-price application for exploring essentia
 
 ## Live website
 
-Production deployment is being finalized.
+[https://bazardor-eight-alpha.vercel.app](https://bazardor-eight-alpha.vercel.app)
 
 Repository: [github.com/rownak2385/ph-b14-assignment7](https://github.com/rownak2385/ph-b14-assignment7)
 
